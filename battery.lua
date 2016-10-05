@@ -8,6 +8,9 @@ batterywidgettimer:connect_signal("timeout",
         fh = assert(io.popen("acpi | cut -d, -f 2,2 -", "r"))
         batStr = fh:read("*l")
         batNum = string.match(batStr, "%d..")
+        if (batNum == nil) then
+            batNum = string.match(batStr, "%d.")
+        end
         batNum = string.gsub(batNum, "%%", "")
         if (batNum == nil or tonumber(batNum) < 21) then
             batterywidget:set_markup( '<span color="red">Battery:' .. batStr .. '</span>' )
