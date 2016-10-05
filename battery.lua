@@ -9,7 +9,7 @@ batterywidgettimer:connect_signal("timeout",
         batStr = fh:read("*l")
         batNum = string.match(batStr, "%d..")
         batNum = string.gsub(batNum, "%%", "")
-        if (batNum == nil or batNum < 21) then
+        if (batNum == nil or tonumber(batNum) < 21) then
             batterywidget:set_markup( '<span color="red">Battery:' .. batStr .. '</span>' )
         else
             batterywidget:set_text("Battery:" .. batStr)
