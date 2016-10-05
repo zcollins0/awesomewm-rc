@@ -122,16 +122,7 @@ space = wibox.widget.textbox()
 space:set_text(" ")
 
 -- Create Spotify widget
-spotifywidget = wibox.widget.textbox()
-function updateSpotifyWidget(widget)
-    local currentsong = awful.util.pread("sp current-oneline")
-    currentsong = string.gsub(currentsong, " | ", "::")
-    widget:set_text(currentsong)
-end
-spotifytimer = timer({timeout = 10})
-spotifytimer:connect_signal("timeout", function() updateSpotifyWidget(spotifywidget) end)
-spotifytimer:start()
-spotifytimer:emit_signal("timeout")
+spotifywidget = require("spotify")
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
