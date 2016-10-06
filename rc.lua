@@ -115,6 +115,15 @@ pipe:set_text("|")
 space = wibox.widget.textbox()
 space:set_text(" ")
 
+-- Create cpu widget
+cpuwidget = lain.widgets.cpu({
+    settings = function()
+        widget:set_markup("CPU: " .. cpu_now.usage .. "%")
+    end})
+
+-- Create memory widget
+memwidget = lain.widgets.mem()
+
 -- Create Spotify widget
 spotifywidget = require("spotify")
 
@@ -250,6 +259,14 @@ for s = 1, screen.count() do
     right_layout:add(pipe)
     right_layout:add(space)
     right_layout:add(spotifywidget)
+    right_layout:add(space)
+    right_layout:add(pipe)
+    right_layout:add(space)
+    right_layout:add(cpuwidget)
+    right_layout:add(space)
+    right_layout:add(pipe)
+    right_layout:add(space)
+    right_layout:add(memwidget)
     right_layout:add(space)
     right_layout:add(pipe)
     right_layout:add(space)
