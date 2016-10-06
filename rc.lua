@@ -55,12 +55,6 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
 {
-    -- awful.layout.suit.tile,
-    -- awful.layout.suit.fair,
-    -- awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier
     awful.layout.suit.floating,
     lain.layout.centerwork,
     lain.layout.uselesstile,
@@ -86,7 +80,7 @@ end
 -- }}}
 
 -- Set layouts for tags
-awful.layout.set(lain.layout.uselesstile, tags[1][1]) -- chromium, spotify, etc would be best with fair
+awful.layout.set(lain.layout.uselesstile, tags[1][1]) -- chromium, spotify, etc would be best tiled
 awful.layout.set(lain.layout.uselesstile, tags[1][2]) -- chat should be tiled
 awful.layout.set(lain.layout.uselessfair, tags[1][3]) -- terminals should be fair
 awful.layout.set(lain.layout.uselesstile, tags[1][4]) -- an IDE should take up most of the screen
@@ -128,17 +122,7 @@ spotifywidget = require("spotify")
 mytextclock = awful.widget.textclock()
 
 -- Create battery widget
-batterywidget = wibox.widget.textbox()
-batterywidget:set_text("Battery: xx%")    
-batterywidgettimer = timer({ timeout = 30 })    
-batterywidgettimer:connect_signal("timeout",    
-  function()    
-    fh = assert(io.popen("acpi | cut -d, -f 2,2 -", "r"))    
-    batterywidget:set_text("Battery:" .. fh:read("*l"))
-    fh:close()    
-  end    
-)
-batterywidgettimer:start()
+batterywidget = require("battery")
 
 -- Create volume widget
 local alsawidget =
@@ -231,45 +215,6 @@ mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
                     awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
                     )
---[[
-mytasklist = {}
-mytasklist.buttons = awful.util.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  -- Without this, the following
-                                                  -- :isvisible() makes no sense
-                                                  c.minimized = false
-                                                  if not c:isvisible() then
-                                                      awful.tag.viewonly(c:tags()[1])
-                                                  end
-                                                  -- This will also un-minimize
-                                                  -- the client, if needed
-                                                  client.focus = c
-                                                  c:raise()
-                                              end
-                                          end),
-                     awful.button({ }, 3, function ()
-                                              if instance then
-                                                  instance:hide()
-                                                  instance = nil
-                                              else
-                                                  instance = awful.menu.clients({
-                                                      theme = { width = 250 }
-                                                  })
-                                              end
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                              if client.focus then client.focus:raise() end
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                              if client.focus then client.focus:raise() end
-                                          end))
-
---]]
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
@@ -295,9 +240,6 @@ for s = 1, screen.count() do
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
-    -- left_layout:add(pipe)
-    -- left_layout:add(space)
-    -- left_layout:add(mypromptbox[s])
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
@@ -502,14 +444,6 @@ awful.rules.rules = {
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c, startup)
-    --[[ Enable sloppy focus
-    c:connect_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)]]
-
     if not startup then
         -- Set the windows at the slave,
         -- i.e. put it at the end of others instead of setting it master.
