@@ -124,7 +124,7 @@ cpuwidget = lain.widgets.cpu({
 -- Create memory widget
 memwidget = lain.widgets.mem({
     settings = function()
-        widget:set_markup("RAM: " .. mem_now.used .. "MiB | SWAP: " .. mem_now.swapused .. " MiB")
+        widget:set_markup("RAM: " .. mem_now.used .. " MiB | SWAP: " .. mem_now.swapused .. " MiB")
     end})
 
 -- Create Spotify widget
