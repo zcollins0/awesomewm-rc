@@ -109,11 +109,11 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibox
 -- Widget separator
-pipe = wibox.widget.textbox()
-pipe:set_text("|")
+sepstr = wibox.widget.textbox()
+sepstr:set_text(" | ")
 
-space = wibox.widget.textbox()
-space:set_text(" ")
+endsepstr = wibox.widget.textbox()
+endsepstr:set_text(" |")
 
 -- Create cpu widget
 cpuwidget = lain.widgets.cpu({
@@ -255,28 +255,17 @@ for s = 1, screen.count() do
     if s == 1 then 
         right_layout:add(wibox.widget.systray())
     end
-    right_layout:add(space)
-    right_layout:add(pipe)
-    right_layout:add(space)
+    right_layout:add(sepstr)
     right_layout:add(spotifywidget)
-    right_layout:add(space)
-    right_layout:add(pipe)
-    right_layout:add(space)
+    right_layout:add(sepstr)
     right_layout:add(cpuwidget)
-    right_layout:add(space)
-    right_layout:add(pipe)
-    right_layout:add(space)
+    right_layout:add(sepstr)
     right_layout:add(memwidget)
-    right_layout:add(space)
-    right_layout:add(pipe)
-    right_layout:add(space)
+    right_layout:add(sepstr)
     right_layout:add(alsawidget.box)
-    right_layout:add(space)
-    right_layout:add(pipe)
-    right_layout:add(space)
+    right_layout:add(sepstr)
     right_layout:add(batterywidget)
-    right_layout:add(space)
-    right_layout:add(pipe)
+    right_layout:add(endsepstr)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
