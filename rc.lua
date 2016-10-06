@@ -122,7 +122,11 @@ cpuwidget = lain.widgets.cpu({
     end})
 
 -- Create memory widget
-memwidget = lain.widgets.mem()
+memwidget = lain.widgets.mem({
+    settings = function()
+        widget:set_markup("RAM: " .. mem_now.used .. "MiB | SWAP: " .. mem_now.swapused .. " MiB")
+    end
+    })
 
 -- Create Spotify widget
 spotifywidget = require("spotify")
@@ -258,9 +262,9 @@ for s = 1, screen.count() do
     right_layout:add(sepstr)
     right_layout:add(spotifywidget)
     right_layout:add(sepstr)
-    right_layout:add(cpuwidget)
-    right_layout:add(sepstr)
     right_layout:add(memwidget)
+    right_layout:add(sepstr)
+    right_layout:add(cpuwidget)
     right_layout:add(sepstr)
     right_layout:add(alsawidget.box)
     right_layout:add(sepstr)
