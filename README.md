@@ -10,6 +10,7 @@ awesomewm-rc
 ###dependencies:
 - acpiclient
 - alsa-utils
+- compton
 - lain-git
 - network-manager-applet
 - networkmanager
