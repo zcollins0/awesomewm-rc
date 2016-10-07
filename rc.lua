@@ -107,11 +107,12 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- {{{ Wibox
+-- {{{ Widgets
 -- Widget separator
 sepstr = wibox.widget.textbox()
 sepstr:set_text(" | ")
 
+-- Widget separator that goes before the clock
 endsepstr = wibox.widget.textbox()
 endsepstr:set_text(" |")
 
@@ -149,11 +150,10 @@ local alsawidget =
 		bar_size = 20 -- adjust to fit your font if the bar doesn't fit
 	}
 }
-
+-- initialize variables
 alsawidget._current_level = 0
 alsawidget._muted = false
 alsawidget.box = wibox.widget.textbox()
-
 -- naughty notifications
 function alsawidget:notify ()
     vicious.force({ alsawidget.box })
@@ -187,7 +187,6 @@ function alsawidget:notify ()
 		alsawidget._notify = naughty.notify ({ preset = preset })
 	end
 end
-
 -- register the widget through vicious
 vicious.register (alsawidget.box, vicious.widgets.volume, function (widget, args)
 	alsawidget._current_level = args[1]
@@ -199,7 +198,6 @@ vicious.register (alsawidget.box, vicious.widgets.volume, function (widget, args
 	    return "Volume: " .. args[1] .. "%"
     end
 end, 5, alsawidget.channel) -- relatively high update time, use of keys/mouse will force update
-
 -- set volume control keys
 globalkeys = awful.util.table.join(globalkeys, awful.key({ }, "XF86AudioRaiseVolume", function()
     awful.util.spawn("amixer sset " .. alsawidget.channel .. " " .. alsawidget.step .. "+", false)
@@ -514,5 +512,8 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- Start network manager applet
 awful.util.spawn_with_shell("nm-applet")
+-- Start compositor
 awful.util.spawn_with_shell("compton -bc")
