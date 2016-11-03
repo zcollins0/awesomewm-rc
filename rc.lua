@@ -110,11 +110,11 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Widgets
 -- Widget separator
 sepstr = wibox.widget.textbox()
-sepstr:set_text(" | ")
+sepstr:set_text(" / ")
 
 -- Widget separator that goes before the clock
 endsepstr = wibox.widget.textbox()
-endsepstr:set_text(" |")
+endsepstr:set_text(" /")
 
 -- Create cpu widget
 cpuwidget = lain.widgets.cpu({
@@ -125,7 +125,7 @@ cpuwidget = lain.widgets.cpu({
 -- Create memory widget
 memwidget = lain.widgets.mem({
     settings = function()
-        widget:set_markup("RAM: " .. mem_now.used .. " MiB | SWAP: " .. mem_now.swapused .. " MiB")
+        widget:set_markup("RAM: " .. mem_now.used .. " MiB / SWAP: " .. mem_now.swapused .. " MiB")
     end})
 
 -- Create Spotify widget
