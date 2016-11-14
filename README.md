@@ -3,7 +3,7 @@ awesomewm-rc
 
 ###usage:
 - make a backup of your rc.lua
-- download repository
+- clone/download repository
 - place contents in ~/.config/awesome/
 - change theme to whatever you want to use in rc.lua
 - restart awesome
