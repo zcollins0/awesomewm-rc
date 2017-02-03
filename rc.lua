@@ -103,6 +103,12 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
+local volume = lain.widgets.alsa({
+    settings = function()
+        widget:set_markup("Volume: " .. volume_now.level .. "%, " .. volume_now.status)
+    end
+})
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -201,6 +207,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+            volume,
             mytextclock,
             s.mylayoutbox,
         },
@@ -314,7 +321,22 @@ globalkeys = awful.util.table.join(
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"}),
+    awful.key({"XF86AudioRaiseVolume"}, "XF86AudioRaiseVolume",
+        function ()
+            os.execute("amixer set Master 5%+")
+            volume.update()
+        end),
+    awful.key({"XF86AudioLowerVolume"}, "XF86AudioLowerVolume",
+        function ()
+            os.execute("amixer set Master 5%-")
+            volume.update()
+        end),
+    awful.key({"XF86AudioMute"}, "XF86AudioMute",
+        function ()
+            os.execute("amixer set Master toggle")
+            volume.update()
+        end)
 )
 
 clientkeys = awful.util.table.join(
