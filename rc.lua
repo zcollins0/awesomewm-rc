@@ -109,6 +109,16 @@ local volume = lain.widgets.alsa({
     end
 })
 
+local battery = lain.widgets.bat({
+    battery = "BAT1",
+    settings = function()
+        widget:set_markup("Battery: " .. bat_now.perc .. "%, " .. bat_now.status)
+    end
+})
+
+local sepstr = wibox.widget.textbox(" / ")
+local endsepstr = wibox.widget.textbox(" /")
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -200,14 +210,20 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
             s.mytaglist,
-            --s.mypromptbox,
         },
-        s.mypromptbox, -- Middle widget
+        {
+            layout = wibox.layout.fixed.horizontal,
+            s.mypromptbox
+        },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+            sepstr,
+            battery,
+            sepstr,
             volume,
+            endsepstr,
             mytextclock,
             s.mylayoutbox,
         },
