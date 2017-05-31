@@ -103,13 +103,13 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
-local volume = lain.widgets.alsa({
+local volume = lain.widget.alsa({
     settings = function()
         widget:set_markup("Volume: " .. volume_now.level .. "%, " .. volume_now.status)
     end
 })
 
-local battery = lain.widgets.bat({
+local battery = lain.widget.bat({
     battery = "BAT1",
     settings = function()
         widget:set_markup("Battery: " .. bat_now.perc .. "%, " .. bat_now.status)
