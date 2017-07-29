@@ -118,6 +118,7 @@ local battery = lain.widget.bat({
 
 local sepstr = wibox.widget.textbox(" / ")
 local endsepstr = wibox.widget.textbox(" /")
+local beginsepstr = wibox.widget.textbox("/ ")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
@@ -210,6 +211,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
             s.mytaglist,
+            beginsepstr,
         },
         {
             layout = wibox.layout.fixed.horizontal,
@@ -217,7 +219,6 @@ awful.screen.connect_for_each_screen(function(s)
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
             wibox.widget.systray(),
             sepstr,
             battery,
